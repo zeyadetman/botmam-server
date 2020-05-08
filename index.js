@@ -41,14 +41,20 @@ app.post("/actions", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  const { error, value: authObject } = userSchema.validate(req.body);
-  if (error) return res.status(400).send({ message: error.details[0].message });
+  try {
+    const { error, value: authObject } = userSchema.validate(req.body);
+    if (error)
+      return res.status(400).send({ message: error.details[0].message });
 
-  const client = new Instagram(authObject);
-  const { authenticated } = await client.login();
-  const token = jwt.sign(authObject, process.env.PRIVATE_KEY);
+    const client = new Instagram(authObject);
+    const { authenticated } = await client.login();
 
-  return res.send({ success: authenticated, token });
+    const token = jwt.sign(authObject, process.env.PRIVATE_KEY);
+
+    return res.send({ success: authenticated, token });
+  } catch (err) {
+    return res.status(400).send({ error: err.message });
+  }
 });
 
 app.post("/logout", async (req, res) => {
