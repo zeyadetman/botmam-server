@@ -19,10 +19,11 @@ module.exports = async (client, config) => {
       const dataList = await photos.hashtag.edge_hashtag_to_media.edges.map(
         (med) => (mode === "follow" ? med.node.owner.id : med.node.id)
       );
+      const uniqueDataList = [...new Set(dataList)];
 
       if (mode === "follow") {
         let count = 0;
-        dataList.slice(0, usersCountToFollow).forEach(async (userId) => {
+        uniqueDataList.slice(0, usersCountToFollow).forEach(async (userId) => {
           (async (userId) => {
             setTimeout(async () => {
               await client.follow({ userId });
@@ -33,7 +34,7 @@ module.exports = async (client, config) => {
         });
       } else {
         let count = 0;
-        dataList.slice(0, likesCountToLike).forEach(async (mediaId) => {
+        uniqueDataList.slice(0, likesCountToLike).forEach(async (mediaId) => {
           (async (userId) => {
             setTimeout(async () => {
               await client.like({ mediaId });

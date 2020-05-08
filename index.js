@@ -52,7 +52,9 @@ app.post("/login", async (req, res) => {
     const client = new Instagram(authObject);
     const { authenticated } = await client.login();
 
-    const token = jwt.sign(authObject, process.env.PRIVATE_KEY);
+    const token = authenticated
+      ? jwt.sign(authObject, process.env.PRIVATE_KEY)
+      : null;
 
     return res.send({ success: authenticated, token });
   } catch (err) {
