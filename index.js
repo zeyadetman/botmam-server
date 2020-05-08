@@ -2,7 +2,9 @@ const express = require("express");
 const Instagram = require("instagram-web-api");
 const Joi = require("@hapi/joi");
 const jwt = require("jsonwebtoken");
+const cors = require("cors");
 const app = express();
+app.use(cors());
 require("dotenv").config();
 const userSchema = Joi.object({
   username: Joi.string().required(),
