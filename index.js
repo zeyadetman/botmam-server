@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 app.use(
   cors({
-    origin: "https://zeyadetman.github.io/botmam",
+    origin: "https://zeyadetman.github.io/*",
   })
 );
 require("dotenv").config();
