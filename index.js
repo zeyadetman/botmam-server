@@ -25,6 +25,7 @@ app.get("/", (req, res) => {
 
 app.post("/actions", async (req, res) => {
   try {
+    req.setTimeout(500000);
     const config = req.body;
     const token = req.header("Authorization");
     if (!token) res.status(401).send({ message: "Unauthorized" });
