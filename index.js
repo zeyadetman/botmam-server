@@ -56,7 +56,11 @@ app.post("/login", async (req, res) => {
       ? jwt.sign(authObject, process.env.PRIVATE_KEY)
       : null;
 
-    return res.send({ success: authenticated, token });
+    if (token) return res.send({ success: authenticated, token });
+    else
+      return res
+        .status(400)
+        .send({ error: "Provide correct username and password." });
   } catch (err) {
     return res.status(400).send({ error: err.message });
   }
