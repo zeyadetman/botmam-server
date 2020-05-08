@@ -9,10 +9,10 @@ module.exports = async (client, config) => {
     try {
       const {
         hashtag,
-        usersCountToFollow,
-        likesCountToLike,
-        comment,
-        mode,
+        usersCountToFollow = 3,
+        likesCountToLike = 0,
+        comment = "",
+        mode = "follow",
       } = config;
 
       const photos = await client.getPhotosByHashtag({ hashtag });
