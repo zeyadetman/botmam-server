@@ -4,7 +4,11 @@ const Joi = require("@hapi/joi");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://zeyadetman.github.io/botmam",
+  })
+);
 require("dotenv").config();
 const userSchema = Joi.object({
   username: Joi.string().required(),
